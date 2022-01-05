@@ -4,67 +4,67 @@ from assertpy import assert_that
 
 use_step_matcher("re")
 
-@given("you want to create a note with name none")
+@when("you want to create a note with name none")
 def step_impl(context):
     context.note_name = None
 
-@then("it won't work")
+@then("Note with a None value for a name won't be created")
 def step_impl(context):
     assert_that(Note).raises(TypeError).when_called_with(context.note_name, 4)
 
-@given("you want to create a note with empty name")
+@when("you want to create a note with empty name")
 def step_impl(context):
     context.note_name = ""
 
-@then("it won't work")
+@then("Note with an empty name won't be created")
 def step_impl(context):
     assert_that(Note).raises(ValueError).when_called_with(context.note_name, 4)
 
-@given("you want to create a note with name that's not a string")
+@when("you want to create a note with a name that's not a string")
 def step_impl(context):
     context.note_name = 123
 
-@then("it won't work")
+@then("Note with a name that's not a string won't be created")
 def step_impl(context):
     assert_that(Note).raises(TypeError).when_called_with(context.note_name, 4)
 
-@given("you want to create a note with name that's a string")
+@when("you want to create a note with a name that's a string")
 def step_impl(context):
     context.note_name = "Maths"
 
-@then("it will work")
+@then("Note with given string will be created")
 def step_impl(context):
     assert_that(Note(context.note_name, 4).get_name()).is_equal_to("Maths")
 
-@given("you want to create a note with note that's not an int or float")
+@When("you want to create a note with note that's not an int or float")
 def step_impl(context):
     context.note = "4.5"
 
-@then("it won't work")
+@then("Note with NaN note won't be created")
 def step_impl(context):
-    assert_that(Note).raises(TypeError).when_called_with("Maths", 4.5)
+    assert_that(Note).raises(TypeError).when_called_with("Maths", context.note)
 
-@given("you want to create a note with note less than 2")
+@when("you want to create a note with note smaller than 2")
 def step_impl(context):
     context.note = 1
 
-@then("it won't work")
+@then("Note with a note smaller than 2 won't be created")
 def step_impl(context):
     assert_that(Note).raises(ValueError).when_called_with("Maths", context.note)
 
-@given("you want to create a note with note bigger than 6")
+@when("you want to create a note with note bigger than 6")
 def step_impl(context):
     context.note = 7
 
-@then("it won't work")
+@then("Note with a note bigger than 6 won't be created")
 def step_impl(context):
-    assert_that(Note).raises(ValueError).when_called_with(context.note_name, 4)
+    assert_that(Note).raises(ValueError).when_called_with("Maths", context.note)
 
-@given("you want to create a note with note between 2 and 6")
+@when("you want to create a note with note between 2 and 6")
 def step_impl(context):
     context.note = 5
 
-@then("it will work")
+@then("Note with given note will be created")
 def step_impl(context):
     assert_that(Note("Maths", context.note).get_note()).is_equal_to(5)
 
