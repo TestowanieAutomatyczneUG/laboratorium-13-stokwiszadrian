@@ -1,6 +1,4 @@
-from zad03.ValidatePassword.ValidatePassword import ValidatePassword
 from behave import *
-from assertpy import assert_that
 
 use_step_matcher("re")
 
